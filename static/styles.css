@@ -1,0 +1,129 @@
+/* styles.css */
+:root {
+    --primary-color: #1d72ff;
+    --dark-bg: #0e0e0e;
+    --text-color: #f5f5f5;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  #roomContainer {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  #roomInput {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 200px;
+    max-width: 80%;
+  }
+  
+  #joinBtn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  #joinBtn:hover {
+    background-color: #155edb;
+  }
+  
+  #videosContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  video {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background-color: black;
+  }
+  
+  #localVideo {
+    border: 2px solid #4caf50;
+    transform: scaleX(-1);
+  }
+  
+  @media (max-width: 768px) {
+    #videosContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    video {
+      max-width: 95%;
+    }
+  }
+  
+  /* Modal Styling */
+  #modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  #modalContent {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  #modalClose {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #modalClose:hover {
+    background-color: #125cc0;
+  }
