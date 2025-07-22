@@ -25,3 +25,66 @@ A lightweight, FaceTime-style video chat app built using **WebRTC**, **Flask**, 
 | Tunneling   | ngrok (for HTTPS & cross-device) |
 
 ---
+### **🐍 2. Create & Activate a Virtual Environment**
+
+```
+python3 -m venv venv
+source venv/bin/activate       # macOS/Linux
+# OR
+venv\Scripts\activate          # Windows
+```
+
+---
+
+### **📦 3. Install Required Python Packages**
+
+```
+pip install flask flask-socketio eventlet
+```
+
+---
+
+### **▶️ 4. Run the Server**
+
+```
+python server.py
+```
+
+By default, the app runs at:http://localhost:5050
+## **🌐 Optional: Use HTTPS & Connect Across Devices with Ngrok**
+
+Want to run this between your laptop and phone over Wi-Fi?
+
+### **✅ Install ngrok**
+
+```
+brew install ngrok               # macOS (via Homebrew)
+# OR
+choco install ngrok              # Windows (via Chocolatey)
+# OR
+Download from https://ngrok.com/download
+```
+
+### **✅ Connect ngrok to Your GitHub Account (first time only)**
+
+```
+ngrok config add-authtoken <your_token>
+```
+
+Get your token from: https://dashboard.ngrok.com/get-started/your-authtoken
+
+---
+
+### **🚀 Start an HTTPS Tunnel to Your Flask Server**
+
+```
+ngrok http 5050
+```
+
+It will give you a URL like:
+
+```
+https://abc123.ngrok.io
+```
+
+Open this link on **both your devices (e.g. laptop + phone)** and join the same room.
