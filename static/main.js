@@ -7,9 +7,16 @@ const config = {
 };
 
 const localVideo = document.getElementById('localVideo');
+localVideo.classList.add('videoTile');
 const joinBtn = document.getElementById('joinBtn');
 const roomInput = document.getElementById('roomInput');
 const videosContainer = document.getElementById('videosContainer');
+const sharedNotes = document.getElementById('sharedNotes');
+const toggleNotesBtn = document.getElementById('toggleNotesBtn');
+const endMeetingBtn = document.getElementById('endMeetingBtn');
+
+let currentLanguage = 'python';
+let inRoom = false;
 
 // Join a room
 joinBtn.onclick = async () => {
@@ -23,11 +30,30 @@ joinBtn.onclick = async () => {
     localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     localVideo.srcObject = localStream;
     socket.emit('join', { room: roomName });
+    // Disable inputs until room_state arrives to prevent lost updates
+    if (sharedNotes) sharedNotes.disabled = true;
   } catch (error) {
-    alert('Camera/mic access denied or blocked by HTTP.');
-    console.error(error);
+    console.warn('Camera/mic not available or denied. Video will be disabled.');
+    // still join room without media
+    socket.emit('join', { room: roomName });
+    if (sharedNotes) sharedNotes.disabled = true;
   }
 };
+
+// Toggle Notes Mode layout
+toggleNotesBtn?.addEventListener('click', () => {
+  document.body.classList.toggle('notes-mode');
+});
+
+endMeetingBtn?.addEventListener('click', () => {
+  if (!inRoom) return;
+  socket.emit('end_meeting');
+});
+
+// Shared notes input
+sharedNotes?.addEventListener('input', (e) => {
+  if (inRoom) socket.emit('notes_update', { text: e.target.value });
+});
 
 // Server tells us to connect to a peer
 socket.on('initiate_peer_connection', async ({ peer_sid, create_offer }) => {
@@ -60,6 +86,23 @@ socket.on('signal', async ({ sender_sid, signal }) => {
   }
 });
 
+// Sync events from server for collaboration
+socket.on('room_state', ({ notes }) => {
+  inRoom = true;
+  if (typeof notes === 'string' && sharedNotes) {
+    sharedNotes.value = notes;
+    sharedNotes.disabled = false;
+  }
+});
+
+socket.on('notes_update', ({ text }) => {
+  if (sharedNotes && document.activeElement !== sharedNotes) {
+    sharedNotes.value = text;
+  }
+});
+
+// Remove code editor sync listeners
+
 // Handle disconnection
 socket.on('peer_left', ({ sid }) => {
   const video = document.getElementById(`remoteVideo-${sid}`);
@@ -70,6 +113,40 @@ socket.on('peer_left', ({ sid }) => {
     peerConnections.get(sid).close();
     peerConnections.delete(sid);
   }
+});
+
+// Show final notes when meeting ends
+socket.on('meeting_ended', ({ notes }) => {
+  if (sharedNotes) {
+    sharedNotes.value = notes || '';
+  }
+  // Force notes mode to focus on notes
+  document.body.classList.add('notes-mode', 'meeting-ended');
+  // Stop local media
+  if (localStream) {
+    try {
+      localStream.getTracks().forEach(t => t.stop());
+    } catch (e) {
+      console.warn('Error stopping local tracks', e);
+    }
+    localStream = null;
+  }
+  if (localVideo) {
+    try { localVideo.srcObject = null; } catch {}
+  }
+  // Close all peer connections
+  peerConnections.forEach(pc => {
+    try { pc.close(); } catch {}
+  });
+  peerConnections.clear();
+  // Remove all remote video elements
+  const remotes = document.querySelectorAll('[id^="remoteVideo-"]');
+  remotes.forEach(v => v.remove());
+  // Optionally hide local video
+  if (localVideo) {
+    localVideo.style.display = 'none';
+  }
+  alert('Meeting ended. Final notes are displayed.');
 });
 
 // Create a new peer connection
@@ -91,8 +168,7 @@ function createPeerConnection(peer_sid) {
       video.id = `remoteVideo-${peer_sid}`;
       video.autoplay = true;
       video.playsInline = true;
-      video.style.width = '45%';
-      video.style.margin = '10px';
+      video.classList.add('videoTile');
       videosContainer.appendChild(video);
     }
 
