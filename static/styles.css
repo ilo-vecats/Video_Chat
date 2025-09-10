@@ -36,6 +36,26 @@
     margin-bottom: 2rem;
     text-align: center;
   }
+  #toggleNotesBtn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  #endMeetingBtn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: #e53935;
+    border: 1px solid #e53935;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
   
   #roomInput {
     padding: 10px;
@@ -61,24 +81,120 @@
     background-color: #155edb;
   }
   
+  #mainLayout {
+    width: 100%;
+    max-width: 1200px;
+  }
+
   #videosContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
     width: 100%;
     max-width: 1000px;
+    align-items: start;
   }
   
   video {
-    width: 100%;
-    max-width: 480px;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     background-color: black;
   }
+
+  .videoTile {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    object-fit: cover;
+  }
   
+  /* Collaboration layout */
+  #collab {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 24px;
+  }
+
+  .pane {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+  }
+
+  .paneHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .controls label {
+    margin-right: 6px;
+  }
+
+  #sharedNotes {
+    width: 100%;
+    flex: 1;
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    outline: none;
+    padding: 12px;
+    resize: vertical;
+    min-height: 300px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  /* Notes-mode layout applied via body.notes-mode */
+  body.notes-mode #mainLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  body.notes-mode #videosContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    align-content: start;
+  }
+  body.notes-mode #collab {
+    display: block;
+  }
+
+  /* Language navbar */
+  .lang-nav {
+    display: flex;
+    gap: 8px;
+  }
+  .lang-nav button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-color);
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .lang-nav button.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  @media (max-width: 900px) {
+    #collab {
+      grid-template-columns: 1fr;
+    }
+  }
+
   #localVideo {
     border: 2px solid #4caf50;
     transform: scaleX(-1);
