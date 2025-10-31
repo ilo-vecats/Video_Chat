@@ -6,3 +6,6 @@ python-engineio==4.9.1
 python-socketio==5.11.2
 SQLAlchemy==2.0.43
 bidict==0.23.1
+gevent==24.2.1
+gevent-websocket==0.10.1
+gunicorn==21.2.0
