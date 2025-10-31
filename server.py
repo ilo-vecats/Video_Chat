@@ -1,14 +1,14 @@
+from gevent import monkey; monkey.patch_all()
 from flask import Flask, send_from_directory, request
 import os
 from datetime import datetime
 from flask_socketio import SocketIO, emit, join_room
-import eventlet
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship, scoped_session
 
 # Use a more specific path for static files to avoid conflicts
 app = Flask(__name__, static_folder='static', static_url_path='/static')
-socketio = SocketIO(app, cors_allowed_origins='*')
+socketio = SocketIO(app, cors_allowed_origins='*', async_mode='gevent')
 
 # A dictionary to hold rooms and their members (sids)
 rooms = {}
