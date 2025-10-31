@@ -4,5 +4,4 @@ eventlet==0.36.1
 python-engineio==4.9.1
 python-socketio==5.11.2
 SQLAlchemy==2.0.43
-greenlet==3.0.3
 bidict==0.23.1
