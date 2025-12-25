@@ -5,6 +5,18 @@ A lightweight, FaceTime-style video chat app built using **WebRTC**, **Flask**, 
 Live on render -> https://video-chat-iro9.onrender.com/
 ---
 
+
+⸻
+
+## 📖 How to Use the Application
+	1.	Open the application in your browser.
+	2.	Enter a Room ID in the input field (any text or number).
+	3.	Open the application in another browser tab or device.
+	4.	Enter the same Room ID to join the same room.
+	5.	Allow camera and microphone access when prompted.
+	6.	Users in the same room can communicate via video and audio.
+	7.	When a user leaves or refreshes the page, the connection is handled automatically.
+
 ## 🌟 Features
 
 - 📡 Peer-to-peer connection via WebRTC
