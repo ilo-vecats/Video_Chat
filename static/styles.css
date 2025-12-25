@@ -1,0 +1,272 @@
+/* styles.css */
+:root {
+    --primary-color: #1d72ff;
+    --dark-bg: #0e0e0e;
+    --text-color: #f5f5f5;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  #roomContainer {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  #toggleNotesBtn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  #endMeetingBtn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: #e53935;
+    border: 1px solid #e53935;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  #roomInput {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 200px;
+    max-width: 80%;
+  }
+  
+  #joinBtn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  #joinBtn:hover {
+    background-color: #155edb;
+  }
+  
+  #mainLayout {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  #videosContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    align-items: stretch;
+    justify-items: stretch;
+    margin: 0 auto;
+  }
+  
+  /* When there are 2 videos, make them equal size - more compatible approach */
+  #videosContainer.video-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  @media (max-width: 768px) {
+    #videosContainer.video-pair {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  video {
+    background-color: #1a1a1a;
+    display: block;
+  }
+
+  .videoTile {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    object-fit: cover;
+    background-color: #1a1a1a;
+  }
+  
+  /* Collaboration layout */
+  #collab {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 24px;
+  }
+
+  .pane {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+  }
+
+  .paneHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .controls label {
+    margin-right: 6px;
+  }
+
+  #sharedNotes {
+    width: 100%;
+    flex: 1;
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    outline: none;
+    padding: 12px;
+    resize: vertical;
+    min-height: 300px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  /* Notes-mode layout applied via body.notes-mode */
+  body.notes-mode #mainLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  body.notes-mode #videosContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    align-content: start;
+    max-width: 100%;
+  }
+  
+  body.notes-mode .videoTile {
+    width: 100%;
+    max-width: 100%;
+  }
+  body.notes-mode #collab {
+    display: block;
+  }
+
+  /* Language navbar */
+  .lang-nav {
+    display: flex;
+    gap: 8px;
+  }
+  .lang-nav button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-color);
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .lang-nav button.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  @media (max-width: 900px) {
+    #collab {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  #localVideo {
+    border: 2px solid #4caf50;
+    transform: scaleX(-1);
+  }
+  
+  /* Remote video styling - consistent with local video */
+  [id^="remoteVideo-"] {
+    border: 2px solid #1d72ff;
+    background-color: #1a1a1a;
+  }
+  
+  @media (max-width: 768px) {
+    #videosContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    video {
+      max-width: 95%;
+    }
+  }
+  
+  /* Modal Styling */
+  #modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  #modalContent {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  #modalClose {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #modalClose:hover {
+    background-color: #125cc0;
+  }

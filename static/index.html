@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC Video Chat</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>FaceTime-Style WebRTC Chat</h1>
+  </header>
+
+  <div id="roomContainer">
+    <input id="roomInput" placeholder="Enter room name..." />
+    <button id="joinBtn">Join Room</button>
+    <button id="toggleNotesBtn" title="Toggle Notes Mode">Notes Mode</button>
+    <button id="endMeetingBtn" title="End meeting and show notes">End Meeting</button>
+  </div>
+
+  <div id="mainLayout">
+    <div id="videosContainer">
+      <video id="localVideo" autoplay muted playsinline></video>
+      <!-- Remote videos will be dynamically appended -->
+    </div>
+
+    <section id="collab">
+      <div class="pane" id="notesPane">
+        <div class="paneHeader">
+          <span>Shared Notes</span>
+        </div>
+        <textarea id="sharedNotes" placeholder="Type shared notes here..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div id="modalContent">
+      <p id="modalMessage"></p>
+      <button id="modalClose">OK</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
